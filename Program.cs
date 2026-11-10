@@ -4,41 +4,58 @@ public class Program
 {
     public static void Main()
     {
-        var random = new Random();
-        int[] arrayNumbers = new int[20];
-        int[] arrayNumbersOdd = new int[20];
-        int[] arrayNumbersEven = new int[20];
+        string[] pokemonList = { "Pikachu", "Charmander", "Squirtle", "Bulbasaur", "Eevee", "Jigglypuff", "Meowth", "Psyduck", "Snorlax", "Gengar", "Machop", "Magikarp", "Vulpix", "Onix", "Abra" };
+        string opcion = "";
 
-
-
-        for (int i = 0; i < arrayNumbers.GetLength(0); i++)
+        while (opcion != "0")
         {
-            arrayNumbers[i] = random.Next(1, 100);
+            Console.WriteLine("Choose an option:");
+            Console.WriteLine("1- Llistar pokémons");
+            Console.WriteLine("0- Exit");
+            Console.Write("> ");
 
-            if (arrayNumbers[i] % 2 == 0)
+            opcion = Console.ReadLine();
+
+            if (opcion == "1")
             {
-                arrayNumbersEven[i] = arrayNumbers[i];
+                Console.WriteLine("\nYour Pokédex contains:");
+                for (int i = 0; i < pokemonList.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {pokemonList[i]}");
+                }
+
+                Console.WriteLine("\nWhich Pokémon do you want to release? Enter the index:");
+                Console.Write("> ");
+
+                if (int.TryParse(Console.ReadLine(), out int indexUsuario))
+                {
+                    int indexArray = indexUsuario - 1;
+
+                    if (indexArray >= 0 && indexArray < pokemonList.Length)
+                    {
+                        if (pokemonList[indexArray] == "Empty")
+                        {
+                            Console.WriteLine($"The index {indexUsuario} is empty. There's no Pokémon in that slot to release.");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"You released {pokemonList[indexArray]}!");
+                            pokemonList[indexArray] = "Empty";
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nInvalid index. Please enter a number between 1 and 15.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\nPlease enter a valid number.");
+                }
             }
-            else
+            else if (opcion != "0")
             {
-                arrayNumbersOdd[i] = arrayNumbers[i];
-            }
-        }
-        Console.Write("Numbers even: ");
-        foreach (int arrayNumber in arrayNumbersEven)
-        {
-            if (arrayNumber != 0)
-            {
-                Console.Write(arrayNumber + " ");
-            }
-        }
-        Console.WriteLine();
-        Console.Write("Numbers odd: ");
-        foreach (int oddNumbers in arrayNumbersOdd)
-        {
-            if (oddNumbers != 0)
-            {
-                Console.Write(oddNumbers + " ");
+                Console.WriteLine("\nInvalid option.");
             }
         }
     }
